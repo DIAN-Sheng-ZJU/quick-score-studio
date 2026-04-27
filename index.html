@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>快谱 Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="topbar" aria-label="Project controls">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">♬</div>
+          <div>
+            <h1>快谱 Studio</h1>
+            <p>简谱 / 五线谱 / 多音色</p>
+          </div>
+        </div>
+        <div class="transport">
+          <button id="playButton" class="primary" type="button" title="播放或暂停">
+            <span aria-hidden="true">▶</span>
+            <span>播放</span>
+          </button>
+          <button id="stopButton" type="button" title="停止">
+            <span aria-hidden="true">■</span>
+          </button>
+          <button id="exportButton" type="button" title="导出 MIDI">
+            <span aria-hidden="true">↧</span>
+            <span>MIDI</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="editor-pane">
+          <div class="pane-title">
+            <h2>输入</h2>
+            <button id="sampleButton" type="button" title="载入示例">↺</button>
+          </div>
+          <textarea id="notationInput" spellcheck="false" aria-label="简谱输入"></textarea>
+          <div class="parse-status" id="parseStatus">0 个音</div>
+        </aside>
+
+        <section class="score-pane">
+          <div class="score-header">
+            <div>
+              <h2>双谱</h2>
+              <p id="scoreMeta">1=C · 4/4</p>
+            </div>
+            <div class="score-tools">
+              <div class="page-controls" aria-label="谱面分页">
+                <button id="prevPageButton" type="button" title="上一页">‹</button>
+                <span id="pageText">1 / 1</span>
+                <button id="nextPageButton" type="button" title="下一页">›</button>
+                <select id="barsPerPageSelect" aria-label="每页小节数">
+                  <option value="4" selected>4 小节</option>
+                  <option value="6">6 小节</option>
+                  <option value="8">8 小节</option>
+                </select>
+              </div>
+              <div class="view-tabs" role="tablist" aria-label="谱面视图">
+                <button class="tab active" data-view="both" type="button">双谱</button>
+                <button class="tab" data-view="jianpu" type="button">简谱</button>
+                <button class="tab" data-view="staff" type="button">五线谱</button>
+              </div>
+            </div>
+          </div>
+          <div class="jianpu-board" id="jianpuBoard" aria-label="简谱预览"></div>
+          <div class="staff-board" id="staffBoard" aria-label="五线谱预览"></div>
+        </section>
+
+        <aside class="control-pane">
+          <div class="control-group">
+            <label for="keySelect">调号</label>
+            <select id="keySelect">
+              <option value="C">1=C</option>
+              <option value="Db">1=Db</option>
+              <option value="D">1=D</option>
+              <option value="Eb">1=Eb</option>
+              <option value="E">1=E</option>
+              <option value="F">1=F</option>
+              <option value="Gb">1=Gb</option>
+              <option value="G" selected>1=G</option>
+              <option value="Ab">1=Ab</option>
+              <option value="A">1=A</option>
+              <option value="Bb">1=Bb</option>
+              <option value="B">1=B</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="instrumentSelect">乐器</label>
+            <select id="instrumentSelect">
+              <option value="altoSax" selected>中音萨克斯 Eb</option>
+              <option value="tenorSax">次中音萨克斯 Bb</option>
+              <option value="sopranoSax">高音萨克斯 Bb</option>
+              <option value="piano">钢琴</option>
+              <option value="guitar">吉他</option>
+              <option value="electricGuitar">电吉他</option>
+              <option value="bass">贝斯</option>
+              <option value="trumpet">小号 Bb</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="tempoInput">速度</label>
+            <div class="inline-control">
+              <input id="tempoInput" type="range" min="48" max="180" value="108" />
+              <output id="tempoOutput">108</output>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="volumeInput">音量</label>
+            <div class="inline-control">
+              <input id="volumeInput" type="range" min="0" max="100" value="72" />
+              <output id="volumeOutput">72</output>
+            </div>
+          </div>
+
+          <div class="segmented" role="group" aria-label="播放范围">
+            <button id="loopButton" type="button" aria-pressed="false">循环</button>
+            <button id="octaveButton" type="button" aria-pressed="false">低八度</button>
+          </div>
+
+          <div class="analysis-box">
+            <div>
+              <span>音域</span>
+              <strong id="rangeText">-</strong>
+            </div>
+            <div>
+              <span>时值</span>
+              <strong id="durationText">-</strong>
+            </div>
+            <div>
+              <span>移调</span>
+              <strong id="transposeText">-</strong>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
